@@ -39,7 +39,7 @@
 
     It will have an email and password field.
 
-4. Create Post Page - ```/create```
+4. Submit Post Page - ```/submit```
 
     This page will allow logged in users to create a post.
 

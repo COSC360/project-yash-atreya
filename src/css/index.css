@@ -1,0 +1,21 @@
+/* For index.html */
+
+/* Resets */
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+}
+
+/* HEADER */
+/* Nav */
+nav {
+    display: inline;
+}
+nav ul {
+    display: inherit;
+}
+nav li {
+    display: inline;
+}
+

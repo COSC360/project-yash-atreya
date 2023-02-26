@@ -5,6 +5,32 @@
     <link rel="stylesheet" type="text/css" href="./css/user.css">
 </head>
 <body>
-    <h1>User Page</h1>
+    <header>
+
+    </header>
+    <main>
+        <h2>user</h2>
+        <!-- TODO: Display form if owner else display details -->
+        <form action="/user" method="post">
+            <label for="user">user: </label>
+            <input type="text" name="user" id="user" disabled value="yash">
+            <label for="email">email: </label>
+            <input type="email" name="email" id="email" disabled value="yash@ubc.ca">
+            <label for="bio">bio: </label>
+            <input type="text" name="bio" id="bio">
+            <label for="karma">karma: </label>
+            <input type="text" name="karma" id="karma" disabled value="0">
+            <!-- TODO: Add Socials -->
+            <input type="submit" value="update">
+        </form>
+        <!-- TODO: Add below pages -->
+        <a href="./changepw">change password</a>
+        <a href="#">submissions</a>
+        <a href="#">comments</a>
+        <a href="#">upvoted</a>
+    <main>
+    <footer>
+    
+    </footer>
 </body>
 </html>

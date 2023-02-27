@@ -8,19 +8,31 @@
     <header>
 
     </header>
+    <main>
     <h2>register</h2>
-    <form action="/register" method="post">
-        <label for="email">email: </label>
-        <input type="email" name="email" id="email">
-        <label for="username">username: </label>
-        <input type="text" name="username" id="username">
-        <label for="password">password: </label>
-        <input type="password" name="password" id="password">
-        <!-- <label for="confirm-password">confirm password</label>
-        <input type="password" name="confirm-password" id="confirm-password"> -->
-        <input type="submit" value="register">
-    </form>
-    <p>Already have an account? <a href="./login.html">login here</a></p>
+        <!-- Account registration form using table with fields: email, username, password -->
+        <form action="./register.php" method="post">
+            <table>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email" name="email" required></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" name="username" required></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" name="password" required></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Register"></td>
+                </tr>
+            </table>
+        </form>
+        <p>Already have an account? <a href="./login.html">login here</a></p>
+    </main>
     <footer>
         
     </footer>

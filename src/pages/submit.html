@@ -10,22 +10,33 @@
     </header>
     <main>
         <h2> submit </h2>
-            <form action="/submit" method="post">
-                <label for="title">title</label>
-                <input type="text" name="title" placeholder="title">
-                <label for="text">text</label>
-                <input type="text" name="text" placeholder="text">
-                <label for="url">url</label>
-                <input type="url" name="url" placeholder="url">
-                <label for="tag">tags</label>
-                <input type="checkbox" name="tag" value="tag1">
-                <label for="tag">tag1</label>
-                <input type="checkbox" name="tag" value="tag2">
-                <label for="tag">tag2</label>
-                <input type="checkbox" name="tag" value="tag3">
-                <label for="tag">tag3</label>
-                <input type="submit" value="submit">
-            </form>
+        <!-- Submit post form using table with the fields: title, text, url, with checkbox for selecting multiple tags: tag1, tag2, tag3 -->
+        <form action="./submit.php" method="post">
+            <table>
+                <tr>
+                    <td>Title:</td>
+                    <td colspan="3"><input type="text" name="title" required></td>
+                </tr>
+                <tr>
+                    <td>Text:</td>
+                    <td colspan="3"><input type="text" name="text" required></td>
+                </tr>
+                <tr>
+                    <td>URL:</td>
+                    <td colspan="3"><input type="url" name="url"></td>
+                </tr>
+                <tr>
+                    <td>Tags:</td>
+                    <td><input type="checkbox" name="tag1" value="tag1">tag1</td>
+                    <td><input type="checkbox" name="tag2" value="tag2">tag2</td>
+                    <td><input type="checkbox" name="tag3" value="tag3">tag3</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Submit"></td>
+                </tr>
+            </table>
+        </form>
     </main>
     <footer>
        

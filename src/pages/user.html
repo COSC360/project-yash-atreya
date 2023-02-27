@@ -10,18 +10,30 @@
     </header>
     <main>
         <h2>user</h2>
-        <!-- TODO: Display form if owner else display details -->
-        <form action="/user" method="post">
-            <label for="user">user: </label>
-            <input type="text" name="user" id="user" disabled value="yash">
-            <label for="email">email: </label>
-            <input type="email" name="email" id="email" disabled value="yash@ubc.ca">
-            <label for="bio">bio: </label>
-            <input type="text" name="bio" id="bio">
-            <label for="karma">karma: </label>
-            <input type="text" name="karma" id="karma" disabled value="0">
-            <!-- TODO: Add Socials -->
-            <input type="submit" value="update">
+        <!-- User form using table with following fields: username, email, bio, karma -->
+        <form action="./user.php" method="post">
+            <table>
+                <tr>
+                    <td>username:</td>
+                    <td><a href="?username=yashatreya">yashatreya</a></td>
+                </tr>
+                <tr>
+                    <td>email:</td>
+                    <td><input type="email" name="email" required>yashatreya.ya@icloud.com</td>
+                </tr>
+                <tr>
+                    <td>bio:</td>
+                    <td><textarea name="bio"></textarea></td>
+                </tr>
+                <tr>
+                    <td>karma:</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="update"></td>
+                </tr>
+            </table>
         </form>
         <!-- TODO: Add below pages -->
         <a href="./changepw">change password</a>

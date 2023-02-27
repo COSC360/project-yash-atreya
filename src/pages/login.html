@@ -9,15 +9,25 @@
 
     </header>
     <main>
-        <div class="login">
             <h2>login</h2>
-            <form action="/login" method="post">
-                <input type="text" name="username" placeholder="username">
-                <input type="password" name="password" placeholder="password">
-                <input type="submit" value="login">
+            <!-- Login form using table with fields: username and password -->
+            <form action="./login.php" method="post">
+                <table>
+                    <tr>
+                        <td>Username:</td>
+                        <td><input type="text" name="username" required></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Login"></td>
+                    </tr>
+                </table>
             </form>
             <p>Don't have an account? <a href="./register.html">Register here</a></p>
-        </div>
     </main>
     <footer>
         

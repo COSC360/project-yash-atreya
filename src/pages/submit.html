@@ -2,28 +2,30 @@
 <html>
 <head>
     <title>submit</title>
-    <link rel="stylesheet" type="text/css" href="./css/submit.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/submit.css"> -->
 </head>
 <body>
+    <!-- Scripts -->
+    <script src="../scripts/submit.js"></script>
     <header>
         
     </header>
     <main>
         <h2> submit </h2>
         <!-- Submit post form using table with the fields: title, text, url, with checkbox for selecting multiple tags: tag1, tag2, tag3 -->
-        <form action="./submit.php" method="post">
+        <form action="./submit.php" method="post" id="submit-form">
             <table>
                 <tr>
                     <td>Title:</td>
-                    <td colspan="3"><input type="text" name="title" required></td>
+                    <td colspan="3"><input type="text" name="title" id="title" required></td>
                 </tr>
                 <tr>
                     <td>Text:</td>
-                    <td colspan="3"><input type="text" name="text" required></td>
+                    <td colspan="3"><input type="text" name="text" id="text" required></td>
                 </tr>
                 <tr>
                     <td>URL:</td>
-                    <td colspan="3"><input type="url" name="url"></td>
+                    <td colspan="3"><input type="url" name="url" id="url"></td>
                 </tr>
                 <tr>
                     <td>Tags:</td>

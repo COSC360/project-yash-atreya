@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>login</title>
-    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/login.css"> -->
 </head>
 <body>
     <header>
@@ -11,23 +11,23 @@
     <main>
             <h2>login</h2>
             <!-- Login form using table with fields: username and password -->
-            <form action="./login.php" method="post">
+            <form action="./login.php" method="post" id="login-form">
                 <table>
                     <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" required></td>
+                        <td>username:</td>
+                        <td><input type="text" name="username" id="username" required></td>
                     </tr>
                     <tr>
-                        <td>Password:</td>
-                        <td><input type="password" name="password" required></td>
+                        <td>password:</td>
+                        <td><input type="password" name="password" is="password" required></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="submit" value="Login"></td>
+                        <td><input type="submit" value="login"></td>
                     </tr>
                 </table>
             </form>
-            <p>Don't have an account? <a href="./register.html">Register here</a></p>
+            <p>don't have an account? <a href="./register.html">register here</a></p>
     </main>
     <footer>
         

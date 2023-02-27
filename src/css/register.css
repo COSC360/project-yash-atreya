@@ -1,11 +1,3 @@
-/* Reset */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 #main-container {
     width: 100%;
     height: 100vh;
@@ -28,14 +20,25 @@
     align-items: center;
 }
 
-/* Add space and padding to the table row */
+#main-container h3 a {
+    text-decoration: none;
+    color: #002144;
+}
+
+#main-container h3 a:hover {
+    color: #002144;
+    text-decoration: underline;
+}
+
+/* Visited */
+#main-container h3 a:visited {
+    color: #002144;
+}
 
 #main-container tr {
     height: 50px;
     padding: 0 10px;
 }
-
-/* Center the submit button using flex */
 
 #submit-btn-container {
     display: flex;
@@ -43,8 +46,6 @@
     justify-content: center;
     align-items: center;
 }
-
-/* Style the submit button */
 
 #submit-btn {
     width: 100px;
@@ -58,8 +59,6 @@
     cursor: pointer;
 }
 
-/* Style the input fields */
-
 input {
     width: 200px;
     height: 30px;
@@ -70,22 +69,6 @@ input {
     margin-bottom: 10px;
 }
 
-#register-link {
-    color: #002144;
-}
-
-
-#main-container h3 a {
-    color: #002144;
-    text-decoration: none;
-}
-
-#main-container h3 a:hover {
-    color: #002144;
-    text-decoration: underline;
-}
-
-/* Visited */
-#main-container h3 a:visited {
+#main-container p a {
     color: #002144;
 }

@@ -2,46 +2,50 @@
 <html>
 <head>
     <title>submit</title>
-    <!-- <link rel="stylesheet" type="text/css" href="../css/submit.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/submit.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-    <!-- Scripts -->
-    <script src="../scripts/submit.js"></script>
     <header>
         
     </header>
-    <main>
-        <h2> submit </h2>
-        <!-- Submit post form using table with the fields: title, text, url, with checkbox for selecting multiple tags: tag1, tag2, tag3 -->
-        <form action="./submit.php" method="post" id="submit-form">
-            <table>
-                <tr>
-                    <td>Title:</td>
-                    <td colspan="3"><input type="text" name="title" id="title" required></td>
-                </tr>
-                <tr>
-                    <td>Text:</td>
-                    <td colspan="3"><input type="text" name="text" id="text" required></td>
-                </tr>
-                <tr>
-                    <td>URL:</td>
-                    <td colspan="3"><input type="url" name="url" id="url"></td>
-                </tr>
-                <tr>
-                    <td>Tags:</td>
-                    <td><input type="checkbox" name="tag1" value="tag1">tag1</td>
-                    <td><input type="checkbox" name="tag2" value="tag2">tag2</td>
-                    <td><input type="checkbox" name="tag3" value="tag3">tag3</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Submit"></td>
-                </tr>
-            </table>
-        </form>
+    <main id="main-container">
+        <div>
+            <h3>submit a post</h3>
+            <!-- Submit post form using table with the fields: title, text, url, with checkbox for selecting multiple tags: tag1, tag2, tag3 -->
+            <form action="./submit.php" method="post" id="submit-form">
+                <table>
+                    <tr>
+                        <td><input type="text" name="title" id="title" required placeholder="title"></td>
+                    </tr>
+                    <tr>
+                        <td><textarea name="text" id="text" required placeholder="text"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><input type="url" name="url" id="url" placeholder="url"></td>
+                    </tr>
+                    <tr>
+                        <!-- Dropdown -->
+                        <td>
+                            <select name="tags" id="tag-selector">
+                                <option>Choose tag</option>
+                                <option value="tag1">tag1</option>
+                                <option value="tag2">tag2</option>
+                                <option value="tag3">tag3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="submit-btn-container">
+                        <td><input id="submit-btn" type="submit" value="submit"></td>
+                </table>
+            </form>
+        </div>
     </main>
     <footer>
        
-    </footer>    
+    </footer>
+    <!-- Scripts -->
+    <script src="../scripts/submit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>    
 </body>
 </html>

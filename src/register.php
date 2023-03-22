@@ -35,10 +35,12 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password
         // echo $msg;
     }
     // Insert the user into the database
-    $query = "INSERT INTO `users` (username, email, password, logged_in) VALUES ('$username', '$email', '$password', '1')";
+    $query = "INSERT INTO `users` (username, email, password) VALUES ('$username', '$email', '$password')";
     $result = mysqli_query($conn,$query);
     if($result){
         $msg = "Registration successful";
+        session_start();
+        $_SESSION['username'] = $username;
         // Redirect to home
         header("Location: index.php");
     } else {

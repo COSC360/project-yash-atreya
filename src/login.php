@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-session_start();
 require('db.php');
 
 if(isset($_POST['username']) && isset($_POST['password'])) {
@@ -11,8 +10,14 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     $query = "SELECT * FROM `users` WHERE username='$username' AND password='$password'";
     $result = mysqli_query($conn,$query) or die(mysql_error());
     $count = mysqli_num_rows($result);
+    // Get the id of the user
+    $row = mysqli_fetch_assoc($result);
+    $user_id = $row['id'];
     if($count == 1) {
+        // Start the session
+        session_start(); 
         $_SESSION['username'] = $username;
+        $_SESSION['user_id'] = $user_id;
         header("Location: index.php");
     } else {
         $msg = "Invalid username or password";
@@ -20,7 +25,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     }
 }
 
-if(!isset($_SESSION['username'])) {
+if(isset($_SESSION['username'])) {
     header("Location: index.php");
 } else {
     ?>

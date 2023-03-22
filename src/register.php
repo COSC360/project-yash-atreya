@@ -37,10 +37,19 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password
     // Insert the user into the database
     $query = "INSERT INTO `users` (username, email, password) VALUES ('$username', '$email', '$password')";
     $result = mysqli_query($conn,$query);
+    // Get the id of the user
+    
     if($result){
         $msg = "Registration successful";
+        $query = "SELECT * FROM `users` WHERE username='$username'";
+        $result = mysqli_query($conn,$query);
+        $row = mysqli_fetch_assoc($result);
+        $user_id = $row['id'];
+        print_r($row);
+        // Start the session
         session_start();
         $_SESSION['username'] = $username;
+        $_SESSION['user_id'] = $user_id;
         // Redirect to home
         header("Location: index.php");
     } else {

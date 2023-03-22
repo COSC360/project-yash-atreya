@@ -2,9 +2,12 @@
 
 Yash Atreya, 86003902
 
+Repository: https://github.com/COSC360/project-yash-atreya/tree/client-side
+
 ## Layout
 ---
 
+Submitted as a seperate file: ```Layout.pdf``` in canvas.
 ## Page Organization and Navigation
 ---
 As described in the proposal before, the site will feature seven main/top level pages, complemented by subpages to improve the user experience. 
@@ -107,3 +110,14 @@ Comments can also upvoted.
 
 ## Design and Styling
 ---
+- Font Style
+
+```Verdana, Geneva, sans-serif```
+
+- Font Size
+
+```10pt```
+
+- Colors used
+
+```#002144, #dddddd, white```

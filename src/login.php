@@ -20,7 +20,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     }
 }
 
-if(isset($_SESSION['username'])) {
+if(!isset($_SESSION['username'])) {
     header("Location: index.php");
 } else {
     ?>

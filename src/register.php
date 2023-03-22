@@ -64,6 +64,7 @@ function validatePassword($password) {
     }
     return true;
 }
+// TODO: Check if session already exists
 ?>
 <html>
     <head>

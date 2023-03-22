@@ -25,7 +25,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     }
 }
 
-if(isset($_SESSION['username'])) {
+if(isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
     header("Location: index.php");
 } else {
     ?>

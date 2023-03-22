@@ -1,8 +1,6 @@
 <?php
 include 'header.php';
 require('db.php');
-// Start the session
-session_start();
 // Check if user is logged in using the session variable
 if(!isset($_SESSION['username']) || $_SESSION['username'] == 'root' || !isset($_SESSION['user_id'])) {
     header("Location: login.php");

@@ -1,5 +1,10 @@
 <?php
+include 'header.php';
 require('db.php');
+
+if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+}
 
 if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
     $username = $_POST['username'];
@@ -46,8 +51,6 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password
         $row = mysqli_fetch_assoc($result);
         $user_id = $row['id'];
         print_r($row);
-        // Start the session
-        session_start();
         $_SESSION['username'] = $username;
         $_SESSION['user_id'] = $user_id;
         // Redirect to home

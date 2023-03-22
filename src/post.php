@@ -1,8 +1,6 @@
 <?php
 include 'header.php';
 require('db.php');
-// Start the session
-session_start();
 // Get query string
 if(isset($_GET['id'])) {
     $id = $_GET['id'];

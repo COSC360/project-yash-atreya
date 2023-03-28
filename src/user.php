@@ -1,5 +1,4 @@
 <?php
-include 'header.php';
 require('db.php');
 // Get query string
 $id = get_user_id();
@@ -16,16 +15,10 @@ if($id == -1) {
     }
     // Get user
     $user = mysqli_fetch_assoc($result);
-    // Display user
-    echo "<div>";
-    echo "username: " . $user['username'] . "<br>";
-    echo "email: " . $user['email'] . "<br>";
-    echo "creation time: " . $user['creation_date'] . "<br>";
-    echo "</div>";
-    if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
-        // logout button
-        echo "<a href='logout.php'>Logout</a>";
-    }
+    // if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
+    //     // logout button
+    //     echo "<a href='logout.php'>Logout</a>";
+    // }
 }
 
 function get_user_id() {
@@ -36,3 +29,45 @@ function get_user_id() {
     }
 }
 ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>user</title>
+        <?php include 'header.php'; ?>
+    </head>
+    <body>
+    <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mt-5 mb-4">User Profile</h1>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th>username</th>
+                <?php echo "<td>" . $user['username'] . "</td>"; ?>
+              </tr>
+              <tr>
+                <th>email</th>
+                <?php echo "<td>" . $user['email'] . "</td>"; ?>
+              </tr>
+              <tr>
+                <th>creation date</th>
+                <?php echo "<td>" . $user['creation_date'] . "</td>"; ?>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- PHP code to display logout button if it's the profile of the current user -->
+        <?php 
+            if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
+                // logout button
+                echo '<a href="logout.php" class="btn btn-danger">logout</a>';
+            }
+        ?>
+
+      </div>
+    </div>
+    </div>
+</body>
+</html>

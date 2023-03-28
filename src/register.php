@@ -1,5 +1,4 @@
 <?php
-include 'header.php';
 require('db.php');
 
 if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
@@ -82,9 +81,10 @@ function validatePassword($password) {
     <head>
         <title>Register</title>
         <?php include('header.php'); ?>
+        
     </head>
     <body>
-    <div class="container">
+    <!-- <div class="container">
 		  <form class="form-signin" method="POST">
 		  <?php if(isset($smsg)){ ?><div class="alert alert-success" role="alert"> <?php echo $smsg; ?> </div><?php } ?>
 		  <?php if(isset($fmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?> </div><?php } ?>
@@ -104,6 +104,32 @@ function validatePassword($password) {
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button> 
 		  </form>
-	</div>
+	</div> -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <h1 class="text-center my-4">register</h1>
+                <form action="process_registration.php" method="post">
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">submit</button>
+                </form>
+                <p class="text-center mt-2">
+                    already have an account? <a href="login.php" class="text-muted">login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
     </body>
 </html>

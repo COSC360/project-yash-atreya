@@ -10,10 +10,6 @@ $username = $_SESSION['username'];
 if(isset($_POST['title'])) {
     // Check if the title is empty
     $title = $_POST['title'];
-    // TODO: Exit if the title is empty
-    if(empty($_POST['title'])) {
-        $msg = "Please enter a title";
-    }
     $url = $_POST['url'];
     $text = $_POST['text'];
     $user_id = $_SESSION['user_id'];
@@ -31,7 +27,7 @@ if(isset($_POST['title'])) {
 ?>
 <html>
     <head>
-        <title>Submit post</title>
+        <title>submit</title>
     </head>
     <!-- Use bootstrap -->
     <body>

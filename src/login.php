@@ -39,7 +39,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
 
 <body>
 
-    <div class="container">
+    <!-- <div class="container">
         <form class="form-signin" method="POST">
             <?php if(isset($fmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?> </div>
             <?php } ?>
@@ -54,6 +54,29 @@ if(isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
             <a class="btn btn-lg btn-primary btn-block" href="register.php">Register</a>
         </form>
+    </div> -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center my-4">login</h1>
+                <form action="login.php" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">password:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">submit</button>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-muted">don't have an account? <a href="register.php">create one here</a>.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 </body>

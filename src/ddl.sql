@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 `password` varchar(50) NOT NULL,
 `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `logged_in` tinyint(1) NOT NULL DEFAULT 0,
+`isAdmin` TINYINT(1) NOT NULL DEFAULT 0,
+`isDisabled` TINYINT(1) NOT NULL DEFAULT 0,
 PRIMARY KEY (`id`)
 );
 

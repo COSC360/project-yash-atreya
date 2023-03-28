@@ -19,20 +19,53 @@
 	while($row = mysqli_fetch_assoc($result)) {
 		$posts[] = $row;
 	}
-	// Check if there are any posts
-	if($count == 0) {
-		echo '<center><div>No posts yet</div></center>';
-	}
-	// Display all posts
-	for($i = 0; $i < $count; $i++) {
-		echo "<div><a href='post.php?id=" . $posts[$i]['id'] . "'>";
-		echo "Post title: " . $posts[$i]['title'] . "<br>";
-		echo "Post url: " . $posts[$i]['url'] . "<br>";
-		echo "Post text: " . $posts[$i]['text'] . "<br>";
-		echo "Post creation time: " . $posts[$i]['creation_date'] . "<br>";
-		echo "Post username: " . $posts[$i]['username'] . "<br>";
-		echo "</a></div>";
-		echo "<br>";
-	}
-	include 'footer.php';
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .post-url {
+      font-size: 0.75rem;
+    }
+
+    .post-details {
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-3">
+    <div class="list-group">
+      <!-- Repeat this for each post in the list -->
+	  <?php
+	  	if ($count == 0) {
+			echo '<center><div>No posts yet</div></center>';
+		}
+	  	for($i = 0; $i < $count; $i++) {
+			echo "<div class='list-group-item'>";
+			echo "<div class='d-flex align-items-center'>";
+			echo "<span class='me-2'>" . ($i + 1) . ".</span>";
+			echo "<div>";
+			echo "<div class='d-flex align-items-baseline'>";
+			echo "<a href='post.php?id=" . $posts[$i]['id'] . "' class='text-decoration-none text-dark me-2'>" . $posts[$i]['title'] . "</a>";
+			if ($posts[$i]['url'] != null || $posts[$i]['url'] != '') {
+				echo "<span class='post-url'>(" . $posts[$i]['url'] . ")</span>";
+			}
+			echo "</div>";
+			echo "<div class='post-details'>";
+			echo "<span>" . $posts[$i]['upvotes'] . " upvotes</span> | <span>" . $posts[$i]['comments'] . " comments</span> | <span>by " . $posts[$i]['username'] . "</span>";
+			echo "</div>";
+			echo "</div>";
+			echo "</div>";
+			echo "</div>";
+		}
+	  ?>
+    </div>
+  </div>
+
+  <?php include 'footer.php'; ?>
+</body>
+</html>

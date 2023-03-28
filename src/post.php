@@ -17,15 +17,44 @@ if(isset($_GET['id'])) {
     }
     // Get post
     $post = mysqli_fetch_assoc($result);
-    // Display post
-    echo "<div>";
-    echo "Post title: " . $post['title'] . "<br>";
-    echo "Post url: " . $post['url'] . "<br>";
-    echo "Post text: " . $post['text'] . "<br>";
-    echo "Post creation time: " . $post['creation_date'] . "<br>";
-    echo "Post username: " . $post['username'] . "<br>";
-    echo "</div>";
 } else {
     // TODO:  Display error message: Post does not exist
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <?php 
+                        echo "<h5 class='card-title'>" . $post['title'] . "</h5>";
+                        // Check if post has a url
+                        if($post['url'] != null && $post['url'] != '') {
+                            echo "<a href='" . $post['url'] . "' class='card-link'>" . $post['url'] . "</a>";
+                        }
+                        echo "<p class='card-text'>" . $post['text'] . "</p>";
+                        echo "<div class='d-flex justify-content-between align-items-center'>";
+                        echo "<span><strong>Upvotes:</strong> " . $post['upvotes'] . "</span>";
+                        echo "<span><strong>Comments:</strong> " . $post['comments'] . "</span>";
+                        echo "</div>";
+                    ?>
+                </div>
+            </div>
+
+            <!-- Comment form -->
+            <!-- <div class="card mt-4">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" rows="3"></textarea>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">add comment</button>
+                    </form>
+                </div>
+            </div> -->
+        </div>
+        <?php include 'footer.php'; ?>
+    </body>
+<html>

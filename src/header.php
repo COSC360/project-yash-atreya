@@ -1,5 +1,6 @@
 <?php 
 require('db.php');
+// require('checkdisabled.php');
 // Start the session
 session_start();
 // Check if user is logged in using the session variable
@@ -42,25 +43,26 @@ if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SE
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="index.php">
         ubc news
       </a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#">new</a>
+            <a class="nav-link" href="index.php">home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="submit.php">submit</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <!-- TODO: Implement Search -->
+          <!-- <li class="nav-item">
             <form class="d-flex">
               <input class="form-control me-2" type="search" placeholder="search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">search</button>
             </form>
-          </li>
+          </li> -->
           <li class="nav-item">
             <?php 
                 if($credential_are_set) {

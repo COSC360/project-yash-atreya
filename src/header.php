@@ -1,4 +1,5 @@
 <?php 
+require 'checkdisabled.php';
 require('db.php');
 // require('checkdisabled.php');
 // Start the session

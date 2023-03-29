@@ -1,24 +1,55 @@
 <?php
+require 'checkdisabled.php';
 require('db.php');
+include 'header.php';
 // Get query string
 $id = get_user_id();
 if($id == -1) {
     // TODO: Display error message: User does not exist and exit
-} else {
-    // Get user from database
-    $query = "SELECT * FROM `users` WHERE `id` = $id";
-    $result = mysqli_query($conn,$query) or die(mysql_error());
-    $count = mysqli_num_rows($result);
-    // Check if user exists
-    if($count == 0) {
-        // TODO: Display error message: User does not exist and exit
+    echo "User does not exist, specify a valid user id in the url query string like this <a href='user.php?id=2'> user.php?id=2 </a>";
+    exit();
+}
+// Get user from database
+$user_query = "SELECT * FROM `users` WHERE `id` = $id";
+$result = mysqli_query($conn,$user_query) or die(mysql_error());
+$user = mysqli_fetch_assoc($result);
+$count = mysqli_num_rows($result);
+// Check if user exists
+if($count == 0) {
+  echo "User with id $id does not exist";
+  exit();
+}
+
+$posts_param = isset($_GET['posts']) && !empty($_GET['posts'] && $_GET['posts'] == 'true') ? $_GET['posts'] : null;
+
+if($posts_param) {
+    // Get posts from database
+    $posts_query = "SELECT * FROM `posts` WHERE `user_id` = $id AND `isComment` = 0";
+    $posts_result = mysqli_query($conn,$posts_query) or die(mysql_error());
+    $posts_count = mysqli_num_rows($posts_result);
+    // Check if user has posts
+    $posts = array();
+    if($posts_count > 0) {
+        while($row = mysqli_fetch_assoc($posts_result)) {
+            $posts[] = $row;
+        }
     }
-    // Get user
-    $user = mysqli_fetch_assoc($result);
-    // if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
-    //     // logout button
-    //     echo "<a href='logout.php'>Logout</a>";
-    // }
+}
+
+$comments_param = isset($_GET['comments']) && !empty($_GET['comments'] && $_GET['comments'] == 'true') ? $_GET['comments'] : null;
+
+if($comments_param) {
+    // Get comments from database
+    $comments_query = "SELECT * FROM `posts` WHERE `user_id` = $id AND `isComment` = 1";
+    $comments_result = mysqli_query($conn,$comments_query) or die(mysql_error());
+    $comments_count = mysqli_num_rows($comments_result);
+    // Check if user has comments
+    $comments = array();
+    if($comments_count > 0) {
+        while($row = mysqli_fetch_assoc($comments_result)) {
+            $comments[] = $row;
+        }
+    }
 }
 
 function get_user_id() {
@@ -33,40 +64,21 @@ function get_user_id() {
 <html>
     <head>
         <title>user</title>
-        <?php include 'header.php'; ?>
     </head>
     <body>
     <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="mt-5 mb-4">User Profile</h1>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>username</th>
-                <?php echo "<td>" . $user['username'] . "</td>"; ?>
-              </tr>
-              <tr>
-                <th>email</th>
-                <?php echo "<td>" . $user['email'] . "</td>"; ?>
-              </tr>
-              <tr>
-                <th>creation date</th>
-                <?php echo "<td>" . $user['creation_date'] . "</td>"; ?>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- PHP code to display logout button if it's the profile of the current user -->
         <?php 
-            if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
-                // logout button
-                echo '<a href="logout.php" class="btn btn-danger">logout</a>';
-            }
+          if ($posts_param == null && $comments_param == null) {
+            include 'profile.php';
+          }
+          if ($posts_param == 'true') {
+            include 'user_posts.php';
+          } else if ($comments_param == 'true') {
+            include 'user_comments.php';
+          }
         ?>
-
-      </div>
     </div>
     </div>
 </body>

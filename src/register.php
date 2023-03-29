@@ -1,4 +1,5 @@
 <?php
+require 'checkdisabled.php';
 require('db.php');
 
 if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
@@ -42,22 +43,31 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password
     $query = "INSERT INTO `users` (username, email, password) VALUES ('$username', '$email', '$password')";
     $result = mysqli_query($conn,$query);
     // Get the id of the user
+    $msg = "Registration successful";
+    $query = "SELECT * FROM `users` WHERE username='$username'";
+    $result = mysqli_query($conn,$query);
+    $row = mysqli_fetch_assoc($result);
+    $user_id = $row['id'];
+    session_start();
+    $_SESSION['username'] = $username;
+    $_SESSION['user_id'] = $user_id;
+    header("Location: index.php");
     
-    if($result){
-        $msg = "Registration successful";
-        $query = "SELECT * FROM `users` WHERE username='$username'";
-        $result = mysqli_query($conn,$query);
-        $row = mysqli_fetch_assoc($result);
-        $user_id = $row['id'];
-        print_r($row);
-        $_SESSION['username'] = $username;
-        $_SESSION['user_id'] = $user_id;
-        // Redirect to home
-        header("Location: index.php");
-    } else {
-        $msg = "Registration failed";
-        echo "Error:  . $query . <br> . mysqli_error($conn)";
-    }
+    // if($result){
+    //     $msg = "Registration successful";
+    //     $query = "SELECT * FROM `users` WHERE username='$username'";
+    //     $result = mysqli_query($conn,$query);
+    //     $row = mysqli_fetch_assoc($result);
+    //     $user_id = $row['id'];
+    //     print_r($row);
+    //     $_SESSION['username'] = $username;
+    //     $_SESSION['user_id'] = $user_id;
+    //     // Redirect to home
+    //     header("Location: index.php");
+    // } else {
+    //     $msg = "Registration failed";
+    //     echo "Error:  . $query . <br> . mysqli_error($conn)";
+    // }
     mysqli_close($conn);
 }
 
@@ -109,7 +119,7 @@ function validatePassword($password) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <h1 class="text-center my-4">register</h1>
-                <form action="process_registration.php" method="post">
+                <form action="register.php" method="post">
                     <div class="form-group">
                         <label for="username">username</label>
                         <input type="text" class="form-control" id="username" name="username" required>

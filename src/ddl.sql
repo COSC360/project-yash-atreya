@@ -15,13 +15,16 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `posts` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `user_id` int(11) NOT NULL,
-`title` varchar(50) NOT NULL,
+`title` varchar(50) NULL,
 `url` varchar(50) NULL,
 `text` text NULL,
 `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `upvotes` int(11) NOT NULL DEFAULT 0,
 `comments` int(11) NOT NULL DEFAULT 0,
 `username` varchar(50) NOT NULL,
+`isComment` TINYINT(1) NOT NULL DEFAULT 0,
+`in_reply_to_id` int(11) NULL DEFAULT 0,
+`parent_id` int(11) NULL DEFAULT 0,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 );

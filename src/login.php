@@ -1,4 +1,5 @@
 <?php
+require 'checkdisabled.php';
 include 'header.php';
 require('db.php');
 
@@ -11,10 +12,11 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     $result = mysqli_query($conn,$query) or die(mysql_error());
     $count = mysqli_num_rows($result);
     // Get the id of the user
-    $row = mysqli_fetch_assoc($result);
-    $user_id = $row['id'];
+    
     if($count == 1) {
         // Start the session
+        $row = mysqli_fetch_assoc($result);
+        $user_id = $row['id'];
         session_start(); 
         $_SESSION['username'] = $username;
         $_SESSION['user_id'] = $user_id;

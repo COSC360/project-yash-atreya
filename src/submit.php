@@ -1,4 +1,5 @@
 <?php
+include 'checkdisabled.php';
 include 'header.php';
 require('db.php');
 // Check if user is logged in using the session variable
@@ -33,17 +34,22 @@ if(isset($_POST['title'])) {
     <body>
         <div class="container">
             <!-- Form -->
+            <h2 class="form-signin-heading">Submit a post</h2>
+            <br>
             <form class="form-signin" method="POST">
                 <?php if(isset($msg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $msg; ?> </div>
                 <?php } ?>
-                <h2 class="form-signin-heading">Submit a post</h2>
+                
                 <label for="inputTitle" class="sr-only">Title</label>
                 <input type="text" name="title" id="inputTitle" class="form-control" placeholder="Title" required>
+                <br>
                 <label for="inputUrl" class="sr-only">Url</label>
-                <input type="text" name="url" id="inputUrl" class="form-control" placeholder="Url">
+                <input type="text" name="url" id="inputUrl" class="form-control" placeholder="Url (optional)">
+                <br>
                 <label for="inputText" class="sr-only">Text</label>
-                <input type="text" name="text" id="inputText" class="form-control" placeholder="Text">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                <textarea name="text" id="inputText" class="form-control" placeholder="Text (optional)"></textarea>
+                <br>
+                <button class="btn btn-primary btn-block" type="submit">Submit</button>
         </div>
     </body>
 </html>

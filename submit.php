@@ -15,8 +15,12 @@ if(isset($_POST['title'])) {
     $text = $_POST['text'];
     $user_id = $_SESSION['user_id'];
     // Insert the post into the database
-    $query = "INSERT INTO `posts` (title, url, text, user_id, username) VALUES ('$title', '$url', '$text', '$user_id', '$username')";
-    $result = mysqli_query($conn,$query);
+    $query = 'INSERT INTO `posts` (title, url, text, user_id, username) VALUES (?, ?, ?, ?, ?)';
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('sssis', $title, $url, $text, $user_id, $username);
+    $result = $stmt->execute();
+
+    // Catch errors
     if($result) {
         echo "Post submitted successfully";
         // TODO: Redirect to the new post

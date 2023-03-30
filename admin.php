@@ -26,7 +26,6 @@ if(isset($_SESSION['username'])) {
         exit();
     }
 } else {
-    echo "You are not logged in";
     $adminLoggedIn = false;
     $adminUsername = null;
 }
@@ -171,7 +170,15 @@ function getResults($conn, $query) {
 </script>
 <body>
 <div class="container mt-5">
+  <!-- Check if logged in -->
+  <?php 
+    if($adminLoggedIn == false) {
+      echo "<center><p>You are not logged in, please <a href='login.php'>login here.</a><p>";
+      exit();
+    }
+  ?>
     <!-- Search form -->
+    
     <form id="search-form" class="mb-4" method="get" action="admin.php?search=">
       <div class="input-group">
         <input type="text" class="form-control" id="search" placeholder="search user by username or email">

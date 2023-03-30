@@ -18,7 +18,7 @@ if(isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['text']) && !emp
     $username = $_SESSION['username'];
     $parent_id = $_GET['id'];
     submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $parent_id);
-    header("Location: post.php?id=$_GET[id]");
+    // header("Location: post.php?id=$_GET[id]");
 }
 // Get query string
 if(isset($_GET['id'])) {
@@ -59,8 +59,12 @@ if(isset($_GET['id'])) {
 
 function submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $parent_id) {
     // Submit a query by inserting a new comment with values of text, in_reply_to_id, user_id, username, parent_id
-    $query = "INSERT INTO `posts` (`text`, `in_reply_to_id`, `user_id`, `username`, `parent_id`, `isComment`) VALUES ('$text', '$in_reply_to_id', '$user_id', '$username', '$parent_id', isComment + 1)";
-    $result = mysqli_query($conn,$query) or die(mysql_error());
+    $query = 'INSERT INTO `posts` (`text`, `in_reply_to_id`, `user_id`, `username`, `parent_id`, `isComment`) VALUES (?, ?, ?, ?, ?, ?)';
+    $stmt = $conn->prepare($query);
+    // Print the query
+    $isComment = 1;
+    $stmt->bind_param('siisii', $text, $in_reply_to_id, $user_id, $username, $parent_id, $isComment);
+    $result = $stmt->execute();
     // Update the parent post's comment count
     $query = "UPDATE `posts` SET `comments` = `comments` + 1 WHERE `id` = $parent_id";
     $result = mysqli_query($conn,$query) or die(mysql_error());

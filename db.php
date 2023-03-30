@@ -2,9 +2,9 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	$servername = "localhost";
-	$username = "86003902";
-	$password = "86003902";
-	$dbname = "db_86003902";
+	$username = "root";
+	$password = "";
+	$dbname = "db_test";
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 	// Check connection

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 `isAdmin` TINYINT(1) NOT NULL DEFAULT 0,
 `isDisabled` TINYINT(1) NOT NULL DEFAULT 0,
 PRIMARY KEY (`id`)
-);
+)ENGINE=InnoDB;
 
 -- Create posts table
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -27,6 +27,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
 `parent_id` int(11) NULL DEFAULT 0,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
-);
+)ENGINE=InnoDB;
 
 

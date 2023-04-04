@@ -1,3 +1,4 @@
+-- TODO: Update the DDL according to the server phpMyAdmin
 -- Create users table
 CREATE TABLE IF NOT EXISTS `users` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,4 +30,15 @@ PRIMARY KEY (`id`),
 FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 )ENGINE=InnoDB;
 
+-- Create upvotes table
+CREATE TABLE IF NOT EXISTS `upvotes` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`user_id` int(11) NOT NULL,
+`username` varchar(50) NOT NULL,
+`post_id` int(11) NOT NULL,
+`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`)
+)ENGINE=InnoDB;
 

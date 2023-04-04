@@ -38,8 +38,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
     <meta name="robots" content="noindex" />
 
 </head>
-
-<body>
+<body> 
+<script type="text/javascript" src="scripts/validate-login.js"></script>
 
     <!-- <div class="container">
         <form class="form-signin" method="POST">
@@ -61,7 +61,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h1 class="text-center my-4">login</h1>
-                <form action="login.php" method="POST">
+                <form action="login.php" id="login-form" method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">username:</label>
                         <input type="text" class="form-control" id="username" name="username" required>

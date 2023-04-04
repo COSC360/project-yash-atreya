@@ -94,6 +94,7 @@ function validatePassword($password) {
         
     </head>
     <body>
+    <script type="text/javascript" src="scripts/validate-register.js"></script>
     <!-- <div class="container">
 		  <form class="form-signin" method="POST">
 		  <?php if(isset($smsg)){ ?><div class="alert alert-success" role="alert"> <?php echo $smsg; ?> </div><?php } ?>
@@ -119,7 +120,7 @@ function validatePassword($password) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <h1 class="text-center my-4">register</h1>
-                <form action="register.php" method="post">
+                <form action="register.php" id="register-form" method="post">
                     <div class="form-group">
                         <label for="username">username</label>
                         <input type="text" class="form-control" id="username" name="username" required>

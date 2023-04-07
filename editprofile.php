@@ -16,6 +16,19 @@ if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SE
       exit();
     }
     $user = mysqli_fetch_assoc($result);
+
+    // Get user image from database
+    $image_query = "SELECT user_id, username, image, content_type FROM `userImages` WHERE `user_id` = ?";
+    $stmt = $conn->prepare($image_query);
+    $stmt->bind_param("i", $user_id);
+    $result = $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($retrieved_user_id, $retrieved_username, $image, $content_type);
+    $stmt->fetch();
+    mysqli_stmt_close($stmt);
+    if($image == null) {
+        echo "Image is null";
+    }
 } else {
     echo "You are not logged in";
     exit();
@@ -27,6 +40,37 @@ if(isset($_POST['username']) && isset($_POST['email'])) {
     $email = $_POST['email'];
     $update_query = "UPDATE `users` SET `username` = '$username', `email` = '$email' WHERE `id` = $user_id";
     $result = mysqli_query($conn,$update_query) or die(mysql_error());
+
+    if(isset($_FILES['profile_image']) && !empty($_FILES['profile_image']) && $_FILES['profile_image']['tmp_name'] != '') {
+        // Check file size for sql blob type
+        if($_FILES['profile_image']['size'] > 1000000) {
+            echo "File size is too large";
+            http_response_code(400);
+            exit();
+        }
+        // Check file type
+        $allowed_types = array('image/jpeg', 'image/png', 'image/gif', 'image/jpg');
+        $content_type = mime_content_type($_FILES['profile_image']['tmp_name']);
+        if(!in_array($content_type, $allowed_types)) {
+            echo "File type is not allowed";
+            http_response_code(400);
+            exit();
+        }
+
+        // Save to uploads dir
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES['profile_image']["name"]);
+        move_uploaded_file($_FILES['profile_image']["tmp_name"], $target_file);
+        $image = file_get_contents($target_file);
+        $image_query = "UPDATE `userImages` SET `image` = ?, `content_type` = ? WHERE `user_id` = ?";
+        $stmt = mysqli_stmt_init($conn); 
+        mysqli_stmt_prepare($stmt, $image_query);
+        $null = NULL;
+        mysqli_stmt_bind_param($stmt, "bsi", $null, $content_type, $user_id);
+        mysqli_stmt_send_long_data($stmt, 0, $image);
+        $result = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
     if($result) {
         // Update session variables
         $_SESSION['username'] = $username;
@@ -55,19 +99,26 @@ if(isset($_GET['changes_saved']) && $_GET['changes_saved'] == 'true') {
             </div>
      <?php } ?>
      <br>
-    <form id="editProfileForm" method="post" action="editprofile.php">
+    <form id="editProfileForm" method="post" action="editprofile.php" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <!-- <input type="text" class="form-control" id="username" name="username" value= required> -->
         <?php echo "<input type='text' class='form-control' id='username' name='username' value='" . $user['username'] . "' required>"; ?>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <!-- <input type="email" class="form-control" id="email" name="email" required> -->
         <?php echo "<input type='email' class='form-control' id='email' name='email' value='" . $user['email'] . "' required>"; ?>
+      </div>
+      <div class="mb-3">
+        <p> Current Profile Image: </p>
+        <?php echo '<img src="' . ($image !== null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto mb-3" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; ?>
+      </div>
+      <div class="mb-3">
+        <label for="profile_image" class="form-label">New Profile Image</label>
+        <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/png, image/jpeg">
       </div>
       <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
   </div>
     <body>
 </html>
+

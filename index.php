@@ -1,17 +1,19 @@
 <?php
-	require('db.php');
-	// CHeck if user is disabled
 	require('checkdisabled.php');
+	require('db.php');
 	include 'header.php';
+	// CHeck if user is disabled
+	
 	// Check if user is logged in using the session variable
-	$credential_are_set = false;
-	$user_id = 'no user id';
-	$username = 'no username';
-	if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
-		$username = $_SESSION['username'];
-		$user_id = $_SESSION['user_id'];
-		$credential_are_set = true;
-	}
+	// echo "Credentials:";
+	// session_start();
+	// echo "Session username: " . $_SESSION['username'];
+	// echo "Session user id: " . $_SESSION['user_id'];
+	// if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
+	// 	$username = $_SESSION['username'];
+	// 	$user_id = $_SESSION['user_id'];
+	// 	$credential_are_set = true;
+	// }
 
 	if(isset($_GET['search']) && $_GET['search'] != '') {
 		$search = $_GET['search'];

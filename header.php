@@ -1,13 +1,10 @@
 <?php 
-require 'checkdisabled.php';
 require('db.php');
 // require('checkdisabled.php');
 // Start the session
 session_start();
 // Check if user is logged in using the session variable
 $credential_are_set = false;
-$user_id = 'no user id';
-$username = 'no username';
 if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SESSION['user_id'])) {
     $username = $_SESSION['username'];
     $user_id = $_SESSION['user_id'];

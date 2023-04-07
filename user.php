@@ -14,6 +14,22 @@ $user_query = "SELECT * FROM `users` WHERE `id` = $id";
 $result = mysqli_query($conn,$user_query) or die(mysql_error());
 $user = mysqli_fetch_assoc($result);
 $count = mysqli_num_rows($result);
+
+// Get user image from database
+$image_query = "SELECT user_id, username, image, content_type FROM `userImages` WHERE `user_id` = ?";
+$stmt = $conn->prepare($image_query);
+$stmt->bind_param("i", $id);
+$result = $stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($retrieved_user_id, $retrieved_username, $image, $content_type);
+$stmt->fetch();
+mysqli_stmt_close($stmt);
+
+if($image == null) {
+    echo "Image is null";
+}
+
+
 // Check if user exists
 if($count == 0) {
   echo "User with id $id does not exist";

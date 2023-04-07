@@ -1,48 +1,42 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <body>
-    <h1 class="mt-5 mb-4">User Profile</h1>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>username</th>
-                <?php echo "<td>" . $user['username'] . "</td>"; ?>
-              </tr>
-              <tr>
-                <th>email</th>
-                <?php echo "<td>" . $user['email'] . "</td>"; ?>
-              </tr>
-              <tr>
-                <th>creation date</th>
-                <?php echo "<td>" . $user['creation_date'] . "</td>"; ?>
-              </tr>
-            </tbody>
-          </table>
+        <h2 class="mt-5 mb-4 text-center"><?php echo $user['username'],'\'s' ?> Profile</h2>
+        <div class="container">
+            <div class="card">
+                <div class="row g-0">
+                    <!-- Profile image column -->
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                        <?php echo '<img src="' . ($image !== null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; ?>
+                    </div>
+                    <!-- User details column -->
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <!-- <h5 class="card-title"><?php echo $user['username']; ?></h5> -->
+                            <p class="card-text"><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                            <p class="card-text"><strong>Creation Date:</strong> <?php echo $user['creation_date']; ?></p>
+                            <div class="mb-3">
+                                <?php echo "<a href='user.php?id=" . $id . "&posts=true'>View Posts</a>" ?>
+                                <br>
+                                <?php echo "<a href='user.php?id=" . $id . "&comments=true'>View Comments</a>" ?>
+                                <br>
+                                <?php 
+                                  if (isset($_SESSION['username']) && $_SESSION['username'] == $username) {
+                                      echo "<a href='editprofile.php'>Edit Profile</a> ";
+                                      echo "<br>";
+                                      
+                                      echo "<a href='changepassword.php'>Change Password</a> ";
+                                      echo "<br>";
+                                      echo '<a href="logout.php" class="btn btn-danger">Logout</a>';
+                                  }
+                                ?>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <?php echo "<a href='user.php?id=" . $id . "&posts=true'>View Posts</a>" ?>
-          <br>
-          <?php echo "<a href='user.php?id=" . $id . "&comments=true'>View Comments</a>" ?>
-          <br>
-          <!-- Edit Profile -->
-          <?php 
-            if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
-                // edit profile button
-                echo "<a href='editprofile.php'>Edit Profile</a>";
-                echo "<br>";
-                echo "<a href='changepassword.php'>Change Password</a>";
-            }
-          ?>
-        </div>
-        <br>
-        <!-- PHP code to display logout button if it's the profile of the current user -->
-        <?php 
-            if(isset($_SESSION['username']) && $_SESSION['username'] == $user['username']) {
-                // logout button
-                echo '<a href="logout.php" class="btn btn-danger">logout</a>';
-            }
-        ?>
-      </div>
     </body>
-<html>
+</html>

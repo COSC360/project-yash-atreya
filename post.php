@@ -9,6 +9,19 @@ if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SE
     $logged_in = true;
 }
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['parent_id']) && isset($_POST['in_reply_to_id']) && isset($_POST['text'])) {
+        $parent_id = $_POST['parent_id'];
+        $in_reply_to_id = $_POST['in_reply_to_id'];
+        $text = $_POST['text'];
+        $user_id = $_SESSION['user_id'];
+        $username = $_SESSION['username'];
+        submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $parent_id);
+        header("Location: post.php?id=$parent_id");
+        exit();
+    }
+}
+
 if(isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['text']) && !empty($_GET['text']) && $logged_in && isset($_GET['add_comment']) && $_GET['add_comment'] == 'true') {
     // Check if the text is empty
     // TODO: Add hard id validation checks. Check if the id is a number and if it exists in the database
@@ -113,10 +126,50 @@ if($logged_in) {
             window.location.href = 'post.php?id=' + id + '&text=' + document.getElementById('comment').value + '&add_comment=true';
             // e.preventDefault();
             });
+
+            function openReplyModal(commentId, parentCommentId) {
+                console.log('opening reply modal for comment ' + commentId + ' with parent comment id ' + parentCommentId);
+                const replyModal = new bootstrap.Modal(document.getElementById('replyModal'));
+                document.getElementById('in_reply_to_comment_id').value = commentId;
+                // Get value of in_reply_to_comment_id
+                replyModal.show();
+            }
+
+            // Get comment reply buttons
+            var replyButtons = document.getElementsByClassName('reply-btn');
+            for (var i = 0; i < replyButtons.length; i++) {
+                replyButtons[i].addEventListener('click', function(e) {
+                    openReplyModal(this.getAttribute('data-comment-id'), this.getAttribute('data-parent-id'));
+                });
+            }
         });
+
     </script>
     <body>
+        
         <div class="container mt-4">
+        <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="replyModalLabel">reply to comment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="reply-form" action="post.php" method="post">
+                        <input type="hidden" id="in_reply_to_comment_id" name="in_reply_to_id" value="">
+                        <input type="hidden" id="parent_id" name="parent_id" value="<?php echo $post['id']; ?>">
+                        <div class="form-group">
+                            <textarea class="form-control" id="reply" name="text" rows="3"></textarea>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">add reply</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <div class="card">
                 <div class="card-body">
                     <!-- Upvote Button -->
@@ -147,6 +200,7 @@ if($logged_in) {
                         }
                         echo "<p class='card-text'>" . $post['text'] . "</p>";
                         echo "<div class='d-flex justify-content-between align-items-center'>";
+                        echo "<span><strong>By:</strong> <a href='user.php?id=".$post['user_id']."'>" . $post['username'] . "</a></span>";
                         echo "<span><strong>Upvotes:</strong> " . $post['upvotes'] . "</span>";
                         echo "<span><strong>Comments:</strong> " . $post['comments'] . "</span>";
                         echo "</div>";
@@ -163,30 +217,64 @@ if($logged_in) {
                     </form>
                 </div>
             </div>
-
-            <!-- Comment form -->
             <?php 
+                function display_comment($conn, $comment, $indent_level, $logged_in) {
+                    $indentation = ($indent_level > 0) ? 'style="margin-left:' . (40 * $indent_level) . 'px;"' : '';
+                
+                    echo "<div class='card'" . $indentation . ">";
+                    echo "<div class='card-body'>";
+                    echo "<p class='card-text'>" . $comment['text'] . "</p>";
+                    echo "<div class='d-flex justify-content-between align-items-center'>";
+                    if($logged_in) {
+                        echo "<span class='btn btn-sm btn-primary reply-btn' data-comment-id='".$comment['id']."' data-parent-id='".$comment['parent_id']."'>reply</span>";   
+                    }
+                    echo "<span>by: <a href='user.php?id=".$comment['user_id']."'> " . $comment['username'] . "</a></span>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<br>";
+                    
+                    // Fetch and display replies
+                    $replies = get_comment_replies($conn, $comment['id']);
+                    foreach ($replies as $reply) {
+                        display_comment($conn, $reply, $indent_level + 1, $logged_in);
+                    }
+                }
+
+                function get_comment_replies($conn, $comment_id) {
+                    $query = "SELECT * FROM `posts` WHERE `in_reply_to_id` = $comment_id";
+                    $result = mysqli_query($conn, $query);
+                    // Check number of rows
+                    $reply_count = mysqli_num_rows($result);
+                    // Fetch comments
+                    $replies = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    return $replies;
+                }
+                
                 if($comment_count > 0) {
                     echo "<h6 class='mt-4'>Comments</h6>";
                     // echo "<div class='card'>";
                     // echo "<div class='card-body'>";
                     foreach($comments as $comment) {
-                        echo "<div class='card'>";
-                        echo "<div class='card-body'>";
-                        echo "<p class='card-text'>" . $comment['text'] . "</p>";
-                        echo "<div class='d-flex justify-content-between align-items-center'>";
-                        // echo "<span><strong>Upvotes:</strong> " . $comment['upvotes'] . "</span>";
-                        // echo "<span><strong>Comments:</strong> " . $comment['comments'] . "</span>";
-                        echo "<span>by: <a href='user.php?id=".$comment['user_id']."'> " . $comment['username'] . "</a><span>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "<br>";
+                        // echo "<div class='card'>";
+                        // echo "<div class='card-body'>";
+                        // echo "<p class='card-text'>" . $comment['text'] . "</p>";
+                        // echo "<div class='d-flex justify-content-between align-items-center'>";
+                        // if($logged_in) {
+                        //     echo "<span class='btn btn-sm btn-primary reply-btn' data-comment-id='".$comment['id']."' data-parent-id='".$comment['parent_id']."'>reply</span>";   
+                        // }
+                        // echo "<span>by: <a href='user.php?id=".$comment['user_id']."'> " . $comment['username'] . "</a><span>";
+                        // echo "</div>";
+                        // echo "</div>";
+                        // echo "</div>";
+                        // echo "<br>";
+                        display_comment($conn, $comment, 0, $logged_in);
                     }
                     // echo "</div>";
                     // echo "</div>";
                 }
             ?>
+            
             
         </div>
         <?php // include 'footer.php'; ?>

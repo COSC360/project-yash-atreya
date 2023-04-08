@@ -63,7 +63,7 @@ if(isset($_POST['username']) && isset($_POST['email'])) {
         $stmt = mysqli_stmt_init($conn); 
         mysqli_stmt_prepare($stmt, $image_query);
         $null = NULL;
-        mysqli_stmt_bind_param($stmt, "bsi", $null, $content_type, $user_id);
+        mysqli_stmt_bind_param($stmt, "bsis", $null, $content_type, $user_id);
         mysqli_stmt_send_long_data($stmt, 0, $image);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);

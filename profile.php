@@ -11,7 +11,7 @@
                         <?php 
                         if($image != null) {
                             echo '<div class="col-md-4 d-flex align-items-center justify-content-center">';
-                            echo '<img src="' . ($image != null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; 
+                            echo '<img src="' . ($image != null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto" alt="Profile Image">'; 
                             echo '</div>';
                         }
                         ?>

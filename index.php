@@ -172,13 +172,29 @@
 	  	if ($count == 0) {
 			echo '<center><div>No posts yet</div></center>';
 		}
+
+		function checkIfAlreadyUpvoted($conn, $post_id, $user_id) {
+			$query = "SELECT * FROM upvotes WHERE post_id = $post_id AND user_id = $user_id";
+			$result = mysqli_query($conn, $query);
+			if (mysqli_num_rows($result) > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	  	for($i = 0; $i < $count; $i++) {
 			echo "<div class='list-group-item'>";
 			echo "<div class='d-flex align-items-center'>";
 			echo "<span class='me-2'>" . ($i + 1) . ".</span>";
 			// Upvote button on if user is logged in
 			if ($credential_are_set) {
-				echo "<button class='upvote-btn me-2' is-upvoted='false' data-post-id='".$posts[$i]['id']."'data-user-id='".$user_id."' data-username='".$username."'>&#9650;</button>";
+				// Check if user has already upvoted the post
+				$is_upvoted = checkIfAlreadyUpvoted($conn, $posts[$i]['id'], $user_id);
+				if ($is_upvoted) {
+					echo "<button style='color:blue;' class='upvote-btn me-2' is-upvoted='true' data-post-id='".$posts[$i]['id']."'data-user-id='".$user_id."' data-username='".$username."'>&#9650;</button>";
+				} else {
+					echo "<button style='color:gray;' class='upvote-btn me-2' is-upvoted='false' data-post-id='".$posts[$i]['id']."'data-user-id='".$user_id."' data-username='".$username."'>&#9650;</button>";
+				}
 			}
 			echo "<div>";
 			echo "<div class='d-flex align-items-baseline'>";

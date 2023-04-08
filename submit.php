@@ -38,7 +38,8 @@ if(isset($_POST['title'])) {
     <body>
         <div class="container">
             <!-- Form -->
-            <h2 class="form-signin-heading">Submit a post</h2>
+            <br>
+            <h3 class="form-signin-heading">Submit a post</h3>
             <br>
             <form class="form-signin" method="POST">
                 <?php if(isset($msg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $msg; ?> </div>

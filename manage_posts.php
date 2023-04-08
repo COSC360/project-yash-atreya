@@ -74,6 +74,9 @@ if(isset($_POST['post_id']) && !empty($_POST['post_id']) && is_numeric($_POST['p
     // Delete posts where in_reply_to_id = post_id
     $delete_post_replies_query = "DELETE FROM `posts` WHERE `in_reply_to_id` = $post_id";
     $delete_post_replies_result = mysqli_query($conn,$delete_post_replies_query) or die(mysql_error());
+    // Delete post where in_reply_to_id = post_id
+    $delete_post_replies_query = "DELETE FROM `posts` WHERE `in_reply_to_id` = $post_id";
+    $delete_post_replies_result = mysqli_query($conn,$delete_post_replies_query) or die(mysql_error());
 
     header('Location: manage_posts.php');
     exit();
@@ -117,7 +120,7 @@ if(isset($_POST['post_id']) && !empty($_POST['post_id']) && is_numeric($_POST['p
         <thead>
             <tr>
                 <th scope="col">Type</th>
-                <th scope="col">Title</th>
+                <th scope="col">Title/Text</th>
                 <th scope="col">Author</th>
                 <th scope="col">Upvotes</th>
                 <th scope="col">Comments</th>
@@ -129,7 +132,7 @@ if(isset($_POST['post_id']) && !empty($_POST['post_id']) && is_numeric($_POST['p
             <?php foreach($posts as $post): ?>
                 <tr>
                     <td><?php echo $post['isComment'] == 1 ? 'Comment' : 'Post' ; ?></td>
-                    <td><?php echo $post['title']; ?></td>
+                    <td><?php echo $post['isComment'] == 1 ? $post['text'] : $post['title']; ?></td>
                     <td><?php echo $post['username']; ?></td>
                     <td><?php echo $post['upvotes']; ?></td>
                     <td><?php echo $post['comments']; ?></td>

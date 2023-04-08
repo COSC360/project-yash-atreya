@@ -81,6 +81,10 @@ function submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $par
     // Update the parent post's comment count
     $query = "UPDATE `posts` SET `comments` = `comments` + 1 WHERE `id` = $parent_id";
     $result = mysqli_query($conn,$query) or die(mysql_error());
+    if($parent_id != $in_reply_to_id) {
+        $query = "UPDATE `posts` SET `comments` = `comments` + 1 WHERE `id` = $in_reply_to_id";
+        $result = mysqli_query($conn,$query) or die(mysql_error());
+    }
 }
 
 // Check if current user has upvoted the post

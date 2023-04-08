@@ -42,7 +42,7 @@ if(isset($_GET['search'])) {
     }
 } else {
     // Get posts from database
-    $posts_query = "SELECT * FROM `posts` WHERE `isComment` = 0";
+    $posts_query = "SELECT * FROM `posts`";
     $posts_result = mysqli_query($conn,$posts_query) or die(mysql_error());
     $posts_count = mysqli_num_rows($posts_result);
     // Check if user has posts
@@ -116,6 +116,7 @@ if(isset($_POST['post_id']) && !empty($_POST['post_id']) && is_numeric($_POST['p
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">Type</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
                 <th scope="col">Upvotes</th>
@@ -127,6 +128,7 @@ if(isset($_POST['post_id']) && !empty($_POST['post_id']) && is_numeric($_POST['p
         <tbody id="results-tbody">
             <?php foreach($posts as $post): ?>
                 <tr>
+                    <td><?php echo $post['isComment'] == 1 ? 'Comment' : 'Post' ; ?></td>
                     <td><?php echo $post['title']; ?></td>
                     <td><?php echo $post['username']; ?></td>
                     <td><?php echo $post['upvotes']; ?></td>

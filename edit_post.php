@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $post = mysqli_fetch_assoc($post_result);
         }
 
-        if(isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['url']) && !empty($_POST['url']) && isset($_POST['text']) && !empty($_POST['text'])) {
+        if(isset($_POST['text']) && !empty($_POST['text'])) {
             $title = $_POST['title'];
             $url = $_POST['url'];
             $text = $_POST['text'];
@@ -102,6 +102,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="card"> 
             <form class="card-body" action="edit_post.php" method="post">
                 <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                <!-- If comment display only text -->
+                <?php
+                if($post['isComment'] == 1) {
+                    echo "<div class='form-group'>
+                            <label for='text'>Text</label>
+                            <textarea name='text' class='form-control' rows='5'>".$post['text']."</textarea>
+                        </div>
+                        <br>
+                        <button type='submit' class='btn btn-primary'>Save Changes</button>";
+                    exit();
+                } ?>
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" name="title" class="form-control" value="<?php echo $post['title']; ?>">

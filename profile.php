@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <body>
         <h2 class="mt-5 mb-4 text-center"><?php echo $user['username'],'\'s' ?> Profile</h2>
@@ -35,7 +34,17 @@
                                       echo "<a href='changepassword.php'>Change Password</a> ";
                                       echo "<br>";
                                       echo "<br>";
+                                      if($user['isAdmin'] == 1) {
+                                        echo "You are an admin: ";
+                                        echo "<br>";
+                                        echo "<a href='admin.php'>Manage Users</a>";
+                                        echo "<br>";
+                                        echo "<a href='manage_posts.php'>Manage Posts</a>";
+                                        echo "<br>";
+                                        echo "<br>";
+                                      }
                                       echo '<a href="logout.php" class="btn btn-danger">Logout</a>';
+                                      
                                   }
                                 ?>
                             </div>

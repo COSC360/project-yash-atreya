@@ -6,6 +6,7 @@ if($_SERVER['REQUEST_METHOD'] != 'POST') {
   http_response_code(405);
   exit();
 }
+
 if(!isset($_POST['post_id']) || !isset($_POST['user_id']) || !isset($_POST['username'])) {
   echo 'Bad Data';
   http_response_code(400);
@@ -65,6 +66,10 @@ function increaseUpvote($conn, $post_id, $user_id, $username) {
     }
 
     echo 'Upvote increased';
+    if(isset($_POST['from']) && $_POST['from'] == 'post_page') {
+        header('Location: post.php?id=' . $post_id);
+        exit();
+    }
     http_response_code(200);
     exit();
 }
@@ -121,6 +126,10 @@ function decreaseUpvote($conn, $post_id, $user_id, $username) {
     }
 
     echo 'Upvote decreased';
+    if(isset($_POST['from']) && $_POST['from'] == 'post_page') {
+        header('Location: post.php?id=' . $post_id);
+        exit();
+    }
     http_response_code(200);
     exit();
 }

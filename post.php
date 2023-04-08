@@ -69,11 +69,37 @@ function submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $par
     $query = "UPDATE `posts` SET `comments` = `comments` + 1 WHERE `id` = $parent_id";
     $result = mysqli_query($conn,$query) or die(mysql_error());
 }
+
+// Check if current user has upvoted the post
+function has_upvoted($conn, $post_id, $user_id) {
+    $query = "SELECT * FROM `upvotes` WHERE `post_id` = $post_id AND `user_id` = $user_id";
+    $result = mysqli_query($conn,$query) or die(mysql_error());
+    $count = mysqli_num_rows($result);
+    if($count == 0) {
+        return false;
+    }
+    return true;
+}
+if($logged_in) {
+    $has_upvoted = has_upvoted($conn, $post['id'], $_SESSION['user_id']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>post</title>
+        <style>
+            .upvote-btn {
+                border: none;
+                background: none;
+                color: gray;
+                font-size: 1rem;
+                padding: 0;
+                margin: 0;
+                display: inline;
+                padding-bottom: 0.5rem;
+            }
+        </style>
     </head>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -93,8 +119,28 @@ function submit_comment($conn, $text, $in_reply_to_id, $user_id, $username, $par
         <div class="container mt-4">
             <div class="card">
                 <div class="card-body">
+                    <!-- Upvote Button -->
+                
                     <?php 
-                        echo "<h5 class='card-title'>" . $post['title'] . "</h5>";
+                        if($logged_in) {
+                            echo "<form class='card-title' action='upvote.php' method='post'>";
+                            echo "<input type='hidden' name='post_id' value='" . $post['id'] . "'>";
+                            echo "<input type='hidden' name='username' value='".$username."'>";
+                            echo "<input type='hidden' name='user_id' value='".$user_id."'>";
+                            echo "<input type='hidden' name='from' value='post_page'>";
+                            echo "<div class='d-flex'>";
+                            if($has_upvoted) {
+                                echo "<input type='hidden' name='increase' value='false'>";
+                                echo "<button type='submit' class='upvote-btn me-2' style='color:blue;'>&#9650;</button>";
+                            } else {
+                                echo "<input type='hidden' name='increase' value='true'>";
+                                echo "<button type='submit' class='upvote-btn me-2'>&#9650;</button>";
+                            }
+                            echo "<h5>" . $post['title'] . "</h5>";
+                            echo "</div>";
+                            echo "</form>";
+                        }
+                        // echo "<h5 class='card-title'>" . $post['title'] . "</h5>";
                         // Check if post has a url
                         if($post['url'] != null && $post['url'] != '') {
                             echo "<a href='" . $post['url'] . "' class='card-link'>" . $post['url'] . "</a>";

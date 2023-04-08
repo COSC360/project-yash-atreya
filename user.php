@@ -25,10 +25,6 @@ $stmt->bind_result($retrieved_user_id, $retrieved_username, $image, $content_typ
 $stmt->fetch();
 mysqli_stmt_close($stmt);
 
-if($image == null) {
-    echo "Image is null";
-}
-
 
 // Check if user exists
 if($count == 0) {

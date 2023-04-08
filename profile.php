@@ -7,9 +7,15 @@
             <div class="card">
                 <div class="row g-0">
                     <!-- Profile image column -->
-                    <div class="col-md-4 d-flex align-items-center justify-content-center">
-                        <?php echo '<img src="' . ($image !== null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; ?>
-                    </div>
+                
+                    
+                        <?php 
+                        if($image != null) {
+                            echo '<div class="col-md-4 d-flex align-items-center justify-content-center">';
+                            echo '<img src="' . ($image != null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; 
+                            echo '</div>';
+                        }
+                        ?>
                     <!-- User details column -->
                     <div class="col-md-8">
                         <div class="card-body">
@@ -27,6 +33,7 @@
                                       echo "<br>";
                                       
                                       echo "<a href='changepassword.php'>Change Password</a> ";
+                                      echo "<br>";
                                       echo "<br>";
                                       echo '<a href="logout.php" class="btn btn-danger">Logout</a>';
                                   }

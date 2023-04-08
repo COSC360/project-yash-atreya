@@ -26,9 +26,6 @@ if(isset($_SESSION['username']) && $_SESSION['username'] != 'root' && isset($_SE
     $stmt->bind_result($retrieved_user_id, $retrieved_username, $image, $content_type);
     $stmt->fetch();
     mysqli_stmt_close($stmt);
-    if($image == null) {
-        echo "Image is null";
-    }
 } else {
     echo "You are not logged in";
     exit();
@@ -110,7 +107,13 @@ if(isset($_GET['changes_saved']) && $_GET['changes_saved'] == 'true') {
       </div>
       <div class="mb-3">
         <p> Current Profile Image: </p>
-        <?php echo '<img src="' . ($image !== null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto mb-3" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; ?>
+        <?php 
+        if($image != null) {
+          echo '<img src="' . ($image !== null ? 'data:' . $content_type . ';base64,' . base64_encode($image) : 'path/to/default-image.png') . '" class="img-fluid rounded mx-auto mb-3" alt="Profile Image" style="max-width: 200px; max-height: 200px;">'; 
+        } else {
+          echo "None";
+        }
+        ?>
       </div>
       <div class="mb-3">
         <label for="profile_image" class="form-label">New Profile Image</label>

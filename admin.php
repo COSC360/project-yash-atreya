@@ -53,14 +53,13 @@ function getResults($conn, $query) {
 <html>
 <head>
     <title>admin</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 </head>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('search-form');
     form.addEventListener('submit', function(e) {
       // e.preventDefault();
-      console.log("Setting action to: " + 'admin.php?search=' + document.getElementById('search').value);
       // form.setAttribute('action', 'admin.php?search=' + document.getElementById('search').value);
       window.location.href = 'admin.php?search=' + document.getElementById('search').value;
       e.preventDefault();
